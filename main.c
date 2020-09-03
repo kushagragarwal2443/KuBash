@@ -7,6 +7,7 @@ char *userinput;
 ssize_t len = 0;
 char *commands[1000];
 char *withincommands[1000];
+char fullcommand[1000];
 
 int main()
 {
@@ -32,6 +33,8 @@ int main()
 
         for( int i=0; i<numcom; i++)
         {
+
+            strcpy(fullcommand, commands[i]);
             
             withincommands[0] = strtok(commands[i], "\r\t "); 
             int numwithincom = 0;
@@ -55,7 +58,7 @@ int main()
 
             else if(strcmp(withincommands[0], "echo")==0)
             {
-                echo();
+                echo(fullcommand);
             }
 
 
