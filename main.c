@@ -1,5 +1,6 @@
 #include "prompt.h"
 #include "pwd.h"
+#include "echo.h"
 #include "headers.h"
 
 char *userinput;
@@ -17,13 +18,13 @@ int main()
         prompt();
         
         getline(&userinput, &len, stdin);
-        printf("%s", userinput);
+        // printf("%s", userinput);
 
         commands[0] = strtok(userinput, ";\n"); 
         int numcom = 0;
         while (commands[numcom] != NULL) 
         {  
-            printf("Command %d, %s\n", numcom+1, commands[numcom]);
+            // printf("Command %d, %s\n", numcom+1, commands[numcom]);
             numcom++;
             commands[numcom] = strtok(NULL, ";\n");
             
@@ -31,11 +32,12 @@ int main()
 
         for( int i=0; i<numcom; i++)
         {
+            
             withincommands[0] = strtok(commands[i], "\r\t "); 
             int numwithincom = 0;
             while (withincommands[numwithincom] != NULL) 
             {  
-                printf("Command %d, Subcommand %d, %s\n", i+1, numwithincom+1, withincommands[numwithincom]);
+                // printf("Command %d, Subcommand %d, %s\n", i+1, numwithincom+1, withincommands[numwithincom]);
                 numwithincom++;
                 withincommands[numwithincom] = strtok(NULL, "\r\t ");
                 
@@ -44,6 +46,16 @@ int main()
             if(strcmp(withincommands[0],"pwd")==0)
             {
                 pwd();
+            }
+
+            else if(strcmp(withincommands[0], "exit")==0)
+            {
+                exit(0);
+            }
+
+            else if(strcmp(withincommands[0], "echo")==0)
+            {
+                echo();
             }
 
 
