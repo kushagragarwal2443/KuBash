@@ -1,6 +1,7 @@
 #include "prompt.h"
 #include "pwd.h"
 #include "echo.h"
+#include "cd.h"
 #include "headers.h"
 
 char *userinput;
@@ -59,6 +60,11 @@ int main()
             else if(strcmp(withincommands[0], "echo")==0)
             {
                 echo(fullcommand);
+            }
+            
+            else if(strcmp(withincommands[0], "cd")==0)
+            {
+                cd(fullcommand);
             }
 
 

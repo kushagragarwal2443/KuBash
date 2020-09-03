@@ -4,6 +4,7 @@
 char hostname[1000];
 char username[1000];
 char dir[1000];
+char path[1000];
 
 void prompt() 
 {
@@ -11,11 +12,18 @@ void prompt()
     getlogin_r(username, sizeof(username));
     getcwd(dir, sizeof(dir));
 
-    if(strcmp(dir, home)==0)
-        strcpy(dir, "~");
-
-    // Complete the rest 2 conditions while coding for cd
-
-    printf("%s@%s:%s ", username, hostname, dir); 
+    char *pos;
+    pos = strstr(dir, home);
+    if(pos!=NULL)
+    {
+        strcpy(path, "~");
+        strcat(path, pos+strlen(home));
+    }
+    else
+    {
+        strcpy(path, dir);
+    }
+    
+    printf("%s@%s:%s ", username, hostname, path); 
  
 }
