@@ -2,6 +2,7 @@
 #include "pwd.h"
 #include "echo.h"
 #include "cd.h"
+#include "ls.h"
 #include "headers.h"
 
 char *userinput;
@@ -65,6 +66,11 @@ int main()
             else if(strcmp(withincommands[0], "cd")==0)
             {
                 cd(fullcommand);
+            }
+
+            else if(strcmp(withincommands[0], "ls")==0)
+            {
+                ls(fullcommand);
             }
 
 
