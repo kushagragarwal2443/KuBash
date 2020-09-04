@@ -1,7 +1,27 @@
 #include "headers.h"
+#include <pwd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <fcntl.h>
+#include <grp.h>
+#include <time.h>
+
+int countdig(long int n) {
+    int count = 0;
+    while (n != 0) {
+        n /= 10;     
+        ++count;
+    }
+    return count;
+}
 
 void print_ls(char *position, int lflag, int aflag, int countdir)
 {
+
+
+    /***************** FORMING PATH TO DIRECTORY INPUT *************************/
+
     char curdir[1000];
     char bigpath[1000];
     char currentdir[1000];
@@ -92,18 +112,125 @@ void print_ls(char *position, int lflag, int aflag, int countdir)
 
     chdir(currentdir);
 
-    
-
     //curdir contains path to directory specified in input
     //currentdir contains path to actual cwd from where ls was invoked
-    
 
-    printf("Hello you are in ls print\n");
-    printf("Dir path is : %s\n", curdir);
-    printf("CWD path is : %s\n", currentdir);
-    printf("Value of aflag is : %d\n", aflag);
-    printf("Value of lflag is : %d\n", lflag);
-    printf("Dir not present flag: %lld\n", dirnotexist);
+
+
+
+
+    /*****************PRINTING STARTS NOW*****************************/
+
+    struct dirent *de;
+    DIR *ourdirectory;
+    ourdirectory= opendir(curdir);
+    struct stat file;
+
+    if (ourdirectory == NULL || dirnotexist==1)
+    {
+        printf("ls: Cannot access %s: No such file or directory\n", position);
+        return;
+    }
+
+        
+    if(countdir!=1)
+    {
+        printf("%s/: \n", position);
+    }
+
+    if(aflag == 1 && lflag == 0)
+    {
+        while ((de = readdir(ourdirectory)) != NULL)
+        {
+            printf("%s  ", de->d_name);
+        }
+        printf("\n");
+    }
+
+    else if(aflag == 0 && lflag == 0)
+    {
+        while ((de = readdir(ourdirectory)) != NULL)
+        {
+            if(de->d_name[0]!='.')
+            {
+                printf("%s  ", de->d_name);
+            }
+        }
+        printf("\n");
+    }
+
+    else if(lflag==1)
+    {        
+        while ((de = readdir(ourdirectory)) != NULL)
+        {
+            char time[20];
+            if(aflag==0)
+            {
+                if(de->d_name[0]!='.')
+                {
+                    stat(de->d_name,&file);
+                    printf( (S_ISDIR(file.st_mode)) ? "d" : "-");
+                    printf( (file.st_mode & S_IRUSR) ? "r" : "-");
+                    printf( (file.st_mode & S_IWUSR) ? "w" : "-");
+                    printf( (file.st_mode & S_IXUSR) ? "x" : "-");
+                    printf( (file.st_mode & S_IRGRP) ? "r" : "-");
+                    printf( (file.st_mode & S_IWGRP) ? "w" : "-");
+                    printf( (file.st_mode & S_IXGRP) ? "x" : "-");
+                    printf( (file.st_mode & S_IROTH) ? "r" : "-");
+                    printf( (file.st_mode & S_IWOTH) ? "w" : "-");
+                    printf( (file.st_mode & S_IXOTH) ? "x" : "-");
+                    printf(" %ld",file.st_nlink);
+                    struct passwd *pw = getpwuid(file.st_uid);
+                    struct group  *gr = getgrgid(file.st_gid);
+                    printf(" %s",pw->pw_name);
+                    printf(" %s",gr->gr_name);
+                    for(long int dig=0; dig<6-countdig(file.st_size); dig++)
+                    {
+                        printf(" ");
+                    }
+                    printf(" %ld",file.st_size);
+                    strftime(time, 20, "%b %d %R", localtime(&(file.st_ctime)));
+                    printf(" %s",time);
+                    printf(" %s\n",de->d_name);
+                }
+            }
+            else
+            {
+                stat(de->d_name,&file);
+                printf( (S_ISDIR(file.st_mode)) ? "d" : "-");
+                printf( (file.st_mode & S_IRUSR) ? "r" : "-");
+                printf( (file.st_mode & S_IWUSR) ? "w" : "-");
+                printf( (file.st_mode & S_IXUSR) ? "x" : "-");
+                printf( (file.st_mode & S_IRGRP) ? "r" : "-");
+                printf( (file.st_mode & S_IWGRP) ? "w" : "-");
+                printf( (file.st_mode & S_IXGRP) ? "x" : "-");
+                printf( (file.st_mode & S_IROTH) ? "r" : "-");
+                printf( (file.st_mode & S_IWOTH) ? "w" : "-");
+                printf( (file.st_mode & S_IXOTH) ? "x" : "-");
+                printf(" %ld",file.st_nlink);
+                struct passwd *pw = getpwuid(file.st_uid);
+                struct group  *gr = getgrgid(file.st_gid);
+                printf(" %s",pw->pw_name);
+                printf(" %s",gr->gr_name);
+                for(long int dig=0; dig<6-countdig(file.st_size); dig++)
+                {
+                    printf(" ");
+                }
+                printf("%ld ",file.st_size);
+                strftime(time, 20, "%b %d %R", localtime(&(file.st_ctime)));
+                printf(" %s",time);
+                printf(" %s\n",de->d_name);
+                
+            }            
+
+        }
+    }
+
+
+    if(countdir!=1)
+    {
+        printf("\n");
+    }
 
 }
 
