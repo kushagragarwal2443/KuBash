@@ -4,6 +4,7 @@
 #include "cd.h"
 #include "ls.h"
 #include "headers.h"
+#include "pinfo.h"
 
 char *userinput;
 ssize_t len = 0;
@@ -71,6 +72,11 @@ int main()
             else if(strcmp(withincommands[0], "ls")==0)
             {
                 ls(fullcommand);
+            }
+
+            else if(strcmp(withincommands[0], "pinfo")==0)
+            {
+                pinfo(fullcommand);
             }
 
 
