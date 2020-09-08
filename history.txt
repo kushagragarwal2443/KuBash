@@ -1,0 +1,20 @@
+history 4
+echo fladf
+echo fjla
+history
+history
+history 5
+history 12310
+history 32
+history 2
+jldf
+echo fljd
+history lfa
+history 4
+history
+history 5
+ls helllo
+ls hello
+ls hello/hi -al
+ls hello/how -al
+exit
