@@ -5,6 +5,7 @@
 #include "ls.h"
 #include "headers.h"
 #include "pinfo.h"
+#include "execute.h"
 
 char *userinput;
 ssize_t len = 0;
@@ -78,6 +79,11 @@ int main()
             {
                 pinfo(fullcommand);
             }
+            else
+            {
+                execute(fullcommand);
+            }
+            
 
 
         }

@@ -1,2 +1,2 @@
 main:
-	gcc -g main.c prompt.c pwd.c echo.c cd.c ls.c pinfo.c
+	gcc -g main.c prompt.c pwd.c echo.c cd.c ls.c pinfo.c execute.c
