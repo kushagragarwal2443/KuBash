@@ -1,20 +1,20 @@
-history 4
-echo fladf
-echo fjla
+ls ..
+ls -al
+ls -la
+ls -a
+ls -al -la
+ls . .. ....
+emacs &
+cd ../..
+cd ~
+ls
+code .
+code .. &
+code &
+pinfo 423
+pinfo
+pinfo 8164
+rm -rf hello
+ls
+ls -al
 history
-history
-history 5
-history 12310
-history 32
-history 2
-jldf
-echo fljd
-history lfa
-history 4
-history
-history 5
-ls helllo
-ls hello
-ls hello/hi -al
-ls hello/how -al
-exit

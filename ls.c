@@ -168,58 +168,108 @@ void print_ls(char *position, int lflag, int aflag, int countdir)
             {
                 if(de->d_name[0]!='.')
                 {
+                    //stat
                     stat(de->d_name,&file);
-                    printf( (S_ISDIR(file.st_mode)) ? "d" : "-");
-                    printf( (file.st_mode & S_IRUSR) ? "r" : "-");
-                    printf( (file.st_mode & S_IWUSR) ? "w" : "-");
-                    printf( (file.st_mode & S_IXUSR) ? "x" : "-");
-                    printf( (file.st_mode & S_IRGRP) ? "r" : "-");
-                    printf( (file.st_mode & S_IWGRP) ? "w" : "-");
-                    printf( (file.st_mode & S_IXGRP) ? "x" : "-");
-                    printf( (file.st_mode & S_IROTH) ? "r" : "-");
-                    printf( (file.st_mode & S_IWOTH) ? "w" : "-");
-                    printf( (file.st_mode & S_IXOTH) ? "x" : "-");
-                    printf(" %ld",file.st_nlink);
+
+                    //file uid and file gid
                     struct passwd *pw = getpwuid(file.st_uid);
                     struct group  *gr = getgrgid(file.st_gid);
+
+                    //load time in time array
+                    strftime(time, 20, "%b %d %R", localtime(&(file.st_ctime)));
+
+                    //****************Printing starts here************************************
+
+                    //check if directory
+                    printf((S_ISDIR(file.st_mode))?"d":"-");
+
+                    //check user permissions
+                    printf((file.st_mode & S_IRUSR)?"r":"-");
+                    printf((file.st_mode & S_IWUSR)?"w":"-");
+                    printf((file.st_mode & S_IXUSR)?"x":"-");
+
+                    //check group permissions
+                    printf((file.st_mode & S_IRGRP)?"r":"-");
+                    printf((file.st_mode & S_IWGRP)?"w":"-");
+                    printf((file.st_mode & S_IXGRP)?"x":"-");
+
+                    //check other permissions
+                    printf((file.st_mode & S_IROTH)?"r":"-");
+                    printf((file.st_mode & S_IWOTH)?"w":"-");
+                    printf((file.st_mode & S_IXOTH)?"x":"-");
+
+                    //nlink
+                    printf(" %ld",file.st_nlink);
+
+                    //print permissions
                     printf(" %s",pw->pw_name);
                     printf(" %s",gr->gr_name);
+
+                    //formatting for size (right aligned)
                     for(long int dig=0; dig<6-countdig(file.st_size); dig++)
                     {
                         printf(" ");
                     }
                     printf(" %ld",file.st_size);
-                    strftime(time, 20, "%b %d %R", localtime(&(file.st_ctime)));
+
+                    //print time
                     printf(" %s",time);
+
+                    //file name
                     printf(" %s\n",de->d_name);
                 }
             }
             else
             {
-                stat(de->d_name,&file);
-                printf( (S_ISDIR(file.st_mode)) ? "d" : "-");
-                printf( (file.st_mode & S_IRUSR) ? "r" : "-");
-                printf( (file.st_mode & S_IWUSR) ? "w" : "-");
-                printf( (file.st_mode & S_IXUSR) ? "x" : "-");
-                printf( (file.st_mode & S_IRGRP) ? "r" : "-");
-                printf( (file.st_mode & S_IWGRP) ? "w" : "-");
-                printf( (file.st_mode & S_IXGRP) ? "x" : "-");
-                printf( (file.st_mode & S_IROTH) ? "r" : "-");
-                printf( (file.st_mode & S_IWOTH) ? "w" : "-");
-                printf( (file.st_mode & S_IXOTH) ? "x" : "-");
-                printf(" %ld",file.st_nlink);
-                struct passwd *pw = getpwuid(file.st_uid);
-                struct group  *gr = getgrgid(file.st_gid);
-                printf(" %s",pw->pw_name);
-                printf(" %s",gr->gr_name);
-                for(long int dig=0; dig<6-countdig(file.st_size); dig++)
-                {
-                    printf(" ");
-                }
-                printf("%ld ",file.st_size);
-                strftime(time, 20, "%b %d %R", localtime(&(file.st_ctime)));
-                printf(" %s",time);
-                printf(" %s\n",de->d_name);
+                //stat
+                    stat(de->d_name,&file);
+
+                    //file uid and file gid
+                    struct passwd *pw = getpwuid(file.st_uid);
+                    struct group  *gr = getgrgid(file.st_gid);
+
+                    //load time in time array
+                    strftime(time, 20, "%b %d %R", localtime(&(file.st_ctime)));
+
+                    //****************Printing starts here************************************
+
+                    //check if directory
+                    printf((S_ISDIR(file.st_mode))?"d":"-");
+                    
+                    //check user permissions
+                    printf((file.st_mode & S_IRUSR)?"r":"-");
+                    printf((file.st_mode & S_IWUSR)?"w":"-");
+                    printf((file.st_mode & S_IXUSR)?"x":"-");
+
+                    //check group permissions
+                    printf((file.st_mode & S_IRGRP)?"r":"-");
+                    printf((file.st_mode & S_IWGRP)?"w":"-");
+                    printf((file.st_mode & S_IXGRP)?"x":"-");
+
+                    //check other permissions
+                    printf((file.st_mode & S_IROTH)?"r":"-");
+                    printf((file.st_mode & S_IWOTH)?"w":"-");
+                    printf((file.st_mode & S_IXOTH)?"x":"-");
+
+                    //nlink
+                    printf(" %ld",file.st_nlink);
+
+                    //print permissions
+                    printf(" %s",pw->pw_name);
+                    printf(" %s",gr->gr_name);
+
+                    //formatting for size (right aligned)
+                    for(long int dig=0; dig<6-countdig(file.st_size); dig++)
+                    {
+                        printf(" ");
+                    }
+                    printf(" %ld",file.st_size);
+
+                    //print time
+                    printf(" %s",time);
+
+                    //file name
+                    printf(" %s\n",de->d_name);
                 
             }            
 
