@@ -8,6 +8,7 @@ This repository contains a Linux shell implemented in C which resembles the Bour
 * Type `exit` or Press `Ctrl+C` to exit the shell
 
 ## Commands implemented
+The following commands were coded for explicitly. All the other commands are supported by the shell using `execvp()`
 
 ### `pwd`
 * Returns the present working directory
@@ -47,10 +48,21 @@ This repository contains a Linux shell implemented in C which resembles the Bour
 * Output: `. .. prompt.c  main.c`
 * Input: `ls -la ../exampledir`
 * Output: <br>
- `drwxrwxr-x 3 kushagra kushagra   4096 Sep 09 11:28 . `<br>
+`drwxrwxr-x 3 kushagra kushagra   4096 Sep 09 11:28 . `<br>
 `drwxrwxr-x 6 kushagra kushagra   4096 Sep 09 11:50 .. `<br>
-`rw-rw-r-- 1 kushagra kushagra    504 Sep 04 01:55 prompt.c `<br>
+`-rw-rw-r-- 1 kushagra kushagra    504 Sep 04 01:55 prompt.c `<br>
 `-rw-rw-r-- 1 kushagra kushagra   3865 Sep 09 01:39 main.c `<br>
+
+### `pinfo [pid]`
+* Shows the process related information for a process
+* If pid is not given as an arguement the pid of the shell is used as default
+* Code available in pinfo.c and Header files in pinfo.h
+* #### Usage examples
+* Input: `pinfo`
+* Output: `pid -- 11403` <br>
+`Process Status -- R` <br>
+`Memory -- 2678784` <br>
+`Executable Path -- ~/a.out`
 
 ### `history [count]`
 * Shows the last count number of commands written in the shell
@@ -62,6 +74,11 @@ This repository contains a Linux shell implemented in C which resembles the Bour
 * Output: `cd ~` <br>
 `emacs &` <br>
 `history 3`
-`
 
+### Background and Foreground processes
+* If a command contains `&` as one of the arguements then it is considered a background process
+* If a background process exits then the shell displays appropriate message using stderr
+* The shell waits until a foreground process is finished
+`
+## File Details
 
