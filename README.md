@@ -79,6 +79,47 @@ The following commands were coded for explicitly. All the other commands are sup
 * If a command contains `&` as one of the arguements then it is considered a background process
 * If a background process exits then the shell displays appropriate message using stderr
 * The shell waits until a foreground process is finished
-`
+
 ## File Details
 
+### cd.c & cd.h
+* Implement the `cd`  command
+* Code in cd.c and Header files are in cd.h
+
+### echo.c & echo.h
+* Implement the `echo`  command
+* Code in echo.c and Header files are in echo.h
+
+### execute.c & execute.h
+* Implement all the other commands which are not coded for explicitly
+* Codes for background and foreground process handling
+* Code in execute.c and Header files are in execute.h
+
+### headers.h
+* Contains header files required throughout all the files
+* Defines global variables
+
+### history.txt
+* Stores last 20 commands written in the shell
+
+### ls.c & ls.h
+* Implement the `ls`  command
+* Code in ls.c and Header files are in ls.h
+
+### main.c
+* Implement the shell and receives user input
+* Calls the corresponding command file based on user input
+
+### makefile
+* Allows easy compilation of all the c files using a single command `make`
+
+### pinfo.c & pinfo.h
+* Implement the `pinfo`  command
+* Code in pinfo.c and Header files are in pinfo.h
+
+### prompt.c & prompt.h
+* Print the shell prompt `kushagra@kushagra:[curdir]`
+
+### pwd.c & pwd.h
+* Implement the `pwd`  command
+* Code in pwd.c and Header files are in pwd.h
