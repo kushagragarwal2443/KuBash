@@ -1,4 +1,5 @@
 #include "headers.h"
+#include "execute.h"
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/wait.h> 
@@ -6,7 +7,7 @@
 char fullcommand[1000];
 char inputfile[1000];
 char outputfile[1000];
-char *args[1000];
+char firstcommand[1000];
 
 void redirection(char *command)
 {
@@ -18,7 +19,7 @@ void redirection(char *command)
     {
         inputfile[i] = '\0';
         outputfile[i] = '\0';
-        args[i] = '\0';
+        firstcommand[i] = '\0';
     }
 
     // Tokenizing full Command to get Flags
@@ -126,8 +127,8 @@ void redirection(char *command)
         
         if(oflag == 0 && iflag == 0)
         {
-            args[i] = withincommands[i];
-            // printf("%s\n", args[i]);
+            strcat(firstcommand, withincommands[i]);
+            strcat(firstcommand, " ");
         }
     }
 
@@ -194,12 +195,8 @@ void redirection(char *command)
         }
 
         // Execute the command
-        int exec_flag = execvp(args[0], args);
-        if ( exec_flag < 0) 
-        {     
-            printf("Command not found\n");
-            return;
-        }
+        execute(firstcommand);
+        
         
         // Return original pointers to stdin and stdout
         dup2(stdout_pointer, 1);

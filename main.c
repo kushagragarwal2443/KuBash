@@ -7,6 +7,7 @@
 #include "pinfo.h"
 #include "execute.h"
 #include "redirection.h"
+#include "piping.h"
 
 char *userinput;
 ssize_t len = 0;
@@ -14,6 +15,8 @@ char *commands[1000];
 char *withincommands[1000];
 char fullcommand[1000];
 char history[21][1000];
+char path_to_history[1000];
+int hist_number =0;
 
 int main()
 {
@@ -22,9 +25,12 @@ int main()
 
     //For History Reading history.txt
     FILE * file_history;
-    int hist_number =0;
     char *lin;
-    if(file_history=fopen("./history.txt", "r"))
+
+    strcpy(path_to_history, home);
+    strcat(path_to_history, "/history.txt");
+    
+    if(file_history=fopen(path_to_history, "r"))
     {
         while(getline(&lin, &len, file_history) != -1)
         {
@@ -56,7 +62,7 @@ int main()
             }
             strcpy(history[19], userinput);
         }
-        FILE *write_hist = fopen("./history.txt", "w");
+        FILE *write_hist = fopen(path_to_history, "w");
         for(int i=0;i<hist_number;i++)
         {
             int results = fputs(history[i], write_hist);
@@ -95,79 +101,57 @@ int main()
             
             char *output_redirec = strstr(fullcommand, ">");
             char *input_redirec = strstr(fullcommand, "<");
+            char *piping_check = strstr(fullcommand, "|");
 
-            if((output_redirec != NULL) || (input_redirec != NULL))
+            if(piping_check != NULL)
+            {
+                piping(fullcommand);
+            }
+
+            else if((output_redirec != NULL) || (input_redirec != NULL))
             {
                 redirection(fullcommand);
             }
 
-            else{
-            //Executing other commands
-
-            if(strcmp(withincommands[0],"pwd")==0)
-            {
-                pwd();
-            }
-
-            else if(strcmp(withincommands[0], "exit")==0)
-            {
-                exit(0);
-            }
-
-            else if(strcmp(withincommands[0], "echo")==0)
-            {
-                echo(fullcommand);
-            }
-            
-            else if(strcmp(withincommands[0], "cd")==0)
-            {
-                cd(fullcommand);
-            }
-
-            else if(strcmp(withincommands[0], "ls")==0)
-            {
-                ls(fullcommand);
-            }
-
-            else if(strcmp(withincommands[0], "pinfo")==0)
-            {
-                pinfo(fullcommand);
-            }
-
-            else if(strcmp(withincommands[0], "history")==0)
-            {
-                int numbercommands;
-                if(numwithincom == 1)
-                {
-                    numbercommands=10;
-                }
-                else
-                {
-                    numbercommands=atoi(withincommands[1]);
-                }
-                
-                if(numbercommands>10)
-                {
-                    printf("Error maximum number of commands allowed is 10\n");
-                }
-                else
-                {
-                    if(hist_number -numbercommands <0)
-                    {
-                        numbercommands = hist_number;
-                    }
-                    for(int i = hist_number-numbercommands; i<=hist_number-1; i++)
-                    {
-                        printf("%s",history[i]);
-                    } 
-                }
-            }
-
-
             else
             {
-                execute(fullcommand);
-            }
+                //Executing other commands
+
+                if(strcmp(withincommands[0], "history")==0)
+                {
+                    int numbercommands;
+                    if(numwithincom == 1)
+                    {
+                        numbercommands=10;
+                    }
+                    else
+                    {
+                        numbercommands=atoi(withincommands[1]);
+                    }
+                    
+                    if(numbercommands>10)
+                    {
+                        printf("Error maximum number of commands allowed is 10\n");
+                    }
+                    else
+                    {
+                        if(hist_number -numbercommands <0)
+                        {
+                            numbercommands = hist_number;
+                        }
+                        for(int i = hist_number-numbercommands; i<=hist_number-1; i++)
+                        {
+                            printf("%s",history[i]);
+                        } 
+                    }
+                }
+
+
+                else
+                {
+                    execute(fullcommand);
+                }
+
             }
             
 

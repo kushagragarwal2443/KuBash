@@ -1,20 +1,20 @@
-cd ../../..
-cd ../../
-cd ~
-cd ../../..
-echo "fldkjlds dfjkds'fjkldsjfkdsl ' fjkdf"
-sort < fjdskljdslfd
-cat < makefile
-pinfo
-cd ..
-cd ..
-cd Documents
-cd KuBash
-cd ..
-cd KuBash
-cd dld
-cd ../../../kushagra/Documents/KuBash
-history
-history 12
-history 9
-pwd
+cat < hi.txt
+echo hello > hi.txt
+cat < hi.txt
+echo hellokijdjkdlj >> hi.txt
+cat < hi.txt
+pinfo >> hi.txt
+cat < hi.txt
+pinfo | wc
+pinfo | wc > hi.txt
+cat ramu | wc > hi.txt
+echo hi > hi.txt
+echo hello > hi.txt
+echo hi >> hi.txt
+cat < hi.txt
+cat < hi.txt | wc
+cat < hi.txt
+sort < hi.txt
+diff hi.txt hello.txt | wc > answer.txt
+sort < hi.txt >> answer.txt
+sort < hi.txt | wc >> answer.txt

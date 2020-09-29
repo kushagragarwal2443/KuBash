@@ -1,22 +1,63 @@
 #include "headers.h"
+#include "pwd.h"
+#include "echo.h"
+#include "cd.h"
+#include "ls.h"
+#include "pinfo.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 
-
 void execute(char *command)
 {
+    char fullcommand[1000];
+    strcpy(fullcommand, command);
+
+
     char *withincommands[1000];
     char *withincommandsremAnd[1000];
     int countis=0;
 
     // Get subcommands out
-    withincommands[0] = strtok(command, "\r\t "); 
+    withincommands[0] = strtok(fullcommand, "\r\t "); 
     int numwithincom = 0;
     while (withincommands[numwithincom] != NULL) 
     {  
         numwithincom++;
         withincommands[numwithincom] = strtok(NULL, "\r\t "); 
     } 
+
+    if(strcmp(withincommands[0],"pwd")==0)
+    {
+        pwd();
+    }
+
+    else if(strcmp(withincommands[0], "exit")==0)
+    {
+        exit(0);
+    }
+
+    else if(strcmp(withincommands[0], "echo")==0)
+    {
+        echo(command);
+    }
+    
+    else if(strcmp(withincommands[0], "cd")==0)
+    {
+        cd(fullcommand);
+    }
+
+    else if(strcmp(withincommands[0], "ls")==0)
+    {
+        ls(fullcommand);
+    }
+
+    else if(strcmp(withincommands[0], "pinfo")==0)
+    {
+        pinfo(fullcommand);
+    }
+
+    else
+    {   
 
     //Check for presence of & parameter
     char params[1000];
@@ -36,8 +77,7 @@ void execute(char *command)
         }
         
     }
-    // withincommandsremAnd[count]=NULL;
-
+    
     // Creating my child process
     pid_t pid=fork();
 
@@ -114,6 +154,7 @@ void execute(char *command)
     else
     {
         printf("fork() failed\n");
+    }
     }
 }
 
