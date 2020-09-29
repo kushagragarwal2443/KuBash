@@ -24,6 +24,7 @@ void prompt()
         strcpy(path, dir);
     }
     
-    printf("%s@%s:%s ", username, hostname, path); 
+    // printf("%s@%s:%s ", username, hostname, path); 
+    printf("\033[0;30m\x1b[46m%s@%s:\x1b[43m%s\033[0m ", username, hostname, path);
  
 }

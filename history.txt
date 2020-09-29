@@ -1,20 +1,20 @@
-ls ..
-ls -al
-ls -la
-ls -a
-ls -al -la
-ls . .. ....
-emacs &
-cd ../..
+cd ../../..
+cd ../../
 cd ~
-ls
-code .
-code .. &
-code &
-pinfo 423
+cd ../../..
+echo "fldkjlds dfjkds'fjkldsjfkdsl ' fjkdf"
+sort < fjdskljdslfd
+cat < makefile
 pinfo
-pinfo 8164
-rm -rf hello
-ls
-ls -al
+cd ..
+cd ..
+cd Documents
+cd KuBash
+cd ..
+cd KuBash
+cd dld
+cd ../../../kushagra/Documents/KuBash
 history
+history 12
+history 9
+pwd

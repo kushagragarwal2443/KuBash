@@ -6,6 +6,7 @@
 #include "headers.h"
 #include "pinfo.h"
 #include "execute.h"
+#include "redirection.h"
 
 char *userinput;
 ssize_t len = 0;
@@ -23,7 +24,7 @@ int main()
     FILE * file_history;
     int hist_number =0;
     char *lin;
-    if(file_history=fopen("history.txt", "r"))
+    if(file_history=fopen("./history.txt", "r"))
     {
         while(getline(&lin, &len, file_history) != -1)
         {
@@ -55,7 +56,7 @@ int main()
             }
             strcpy(history[19], userinput);
         }
-        FILE *write_hist = fopen("history.txt", "w");
+        FILE *write_hist = fopen("./history.txt", "w");
         for(int i=0;i<hist_number;i++)
         {
             int results = fputs(history[i], write_hist);
@@ -89,6 +90,19 @@ int main()
                 withincommands[numwithincom] = strtok(NULL, "\r\t ");
                 
             } 
+
+            // Checking Redirection
+            
+            char *output_redirec = strstr(fullcommand, ">");
+            char *input_redirec = strstr(fullcommand, "<");
+
+            if((output_redirec != NULL) || (input_redirec != NULL))
+            {
+                redirection(fullcommand);
+            }
+
+            else{
+            //Executing other commands
 
             if(strcmp(withincommands[0],"pwd")==0)
             {
@@ -153,6 +167,7 @@ int main()
             else
             {
                 execute(fullcommand);
+            }
             }
             
 
