@@ -29,92 +29,114 @@ void cd(char *command)
     // CD logic starts
     else if(numwithincom == 2)
     {
-        strcpy(position, withincommands[1]);
-        long long length = strlen(position);
-
-        // Get presence of dot and tilda using respective flags
-        long long int tildapresent = 0;
-        long long int dotpresent = 0;
-        for(long long int a=0; a<length; a++)
+        if(strcmp(withincommands[1], "-")==0)
         {
-            if((int)position[a] == 126 )
+            char prevpath[1000];
+            char last_last_working_dir[1000];
+            strcpy(last_last_working_dir, last_working_dir);
+            getcwd(last_working_dir, sizeof(last_working_dir));
+            chdir(last_last_working_dir);
+            char *pos = strstr(last_last_working_dir, home);
+            if(pos!=NULL)
             {
-                tildapresent=1;
-            }
-            if((int)position[a] == 46)
-            {
-                dotpresent = 1;
-            }
-        }
-
-        // Fill curdir array with \0 to initialise
-        for(int a = 0; a<1000; a++)
-        {
-            curdir[a]='\0';
-        }
-
-        // Store current position in curdir
-        getcwd(curdir, sizeof(curdir));
-
-        // Error handling for chdir
-        long long int error=0;
-
-        // Start from home directory where our shell resides
-        if(tildapresent==1) 
-        {
-            strcpy(bigpath, home);
-            strcat(bigpath, position+1);
-            error = chdir(bigpath);
-            if(error == 0)
-            {
-                getcwd(bigpath, sizeof(bigpath));
-                strcpy(curdir, bigpath);
-                // printf("%s\n", curdir);
+                strcpy(prevpath, "~");
+                strcat(prevpath, pos+strlen(home));
             }
             else
             {
-                printf("Directory does not exist\n");                
+                strcpy(prevpath, last_last_working_dir);
             }
-            
-            
+            printf("%s\n", prevpath);
         }
-
-        else if(dotpresent == 1)
-        {
-            strcpy(bigpath, curdir);
-            strcat(bigpath, "/");
-            strcat(bigpath, position);
-            error = chdir(bigpath);
-            if(error == 0)
-            {
-                getcwd(bigpath, sizeof(bigpath));
-                strcpy(curdir, bigpath);
-                // printf("%s\n", curdir);
-            }
-            else
-            {
-                printf("Directory does not exist\n");    
-            }
-        }
-
         else
         {
-            strcpy(bigpath, position);
-            error = chdir(bigpath);
-            if(error == 0)
+            
+            getcwd(last_working_dir, sizeof(last_working_dir));
+            strcpy(position, withincommands[1]);
+            long long length = strlen(position);
+
+            // Get presence of dot and tilda using respective flags
+            long long int tildapresent = 0;
+            long long int dotpresent = 0;
+            for(long long int a=0; a<length; a++)
             {
-                getcwd(bigpath, sizeof(bigpath));
-                strcpy(curdir, bigpath);
-                // printf("%s\n", curdir);
+                if((int)position[a] == 126 )
+                {
+                    tildapresent=1;
+                }
+                if((int)position[a] == 46)
+                {
+                    dotpresent = 1;
+                }
             }
+
+            // Fill curdir array with /0 to initialise
+            for(int a = 0; a<1000; a++)
+            {
+                curdir[a]='\0';
+            }
+
+            // Store current position in curdir
+            getcwd(curdir, sizeof(curdir));
+
+            // Error handling for chdir
+            long long int error=0;
+
+            // Start from home directory where our shell resides
+            if(tildapresent==1) 
+            {
+                strcpy(bigpath, home);
+                strcat(bigpath, position+1);
+                error = chdir(bigpath);
+                if(error == 0)
+                {
+                    getcwd(bigpath, sizeof(bigpath));
+                    strcpy(curdir, bigpath);
+                    // printf("%s\n", curdir);
+                }
+                else
+                {
+                    printf("Directory does not exist\n");                
+                }
+                
+                
+            }
+
+            else if(dotpresent == 1)
+            {
+                strcpy(bigpath, curdir);
+                strcat(bigpath, "/");
+                strcat(bigpath, position);
+                error = chdir(bigpath);
+                if(error == 0)
+                {
+                    getcwd(bigpath, sizeof(bigpath));
+                    strcpy(curdir, bigpath);
+                    // printf("%s\n", curdir);
+                }
+                else
+                {
+                    printf("Directory does not exist\n");    
+                }
+            }
+
             else
             {
-                printf("Directory does not exist\n");
+                strcpy(bigpath, position);
+                error = chdir(bigpath);
+                if(error == 0)
+                {
+                    getcwd(bigpath, sizeof(bigpath));
+                    strcpy(curdir, bigpath);
+                    // printf("%s\n", curdir);
+                }
+                else
+                {
+                    printf("Directory does not exist\n");
+                }
+
             }
-
         }
-        
-
 
     }
 

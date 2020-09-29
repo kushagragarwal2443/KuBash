@@ -58,6 +58,35 @@ void execute(char *command)
         pinfo(command);
     }
 
+    else if(strcmp(withincommands[0], "history")==0)
+    {
+        int numbercommands;
+        if(numwithincom == 1)
+        {
+            numbercommands=10;
+        }
+        else
+        {
+            numbercommands=atoi(withincommands[1]);
+        }
+        
+        if(numbercommands>10)
+        {
+            printf("Error maximum number of commands allowed is 10\n");
+        }
+        else
+        {
+            if(hist_number -numbercommands <0)
+            {
+                numbercommands = hist_number;
+            }
+            for(int i = hist_number-numbercommands; i<=hist_number-1; i++)
+            {
+                printf("%s",history[i]);
+            } 
+        }
+    }
+
     else if(strcmp(withincommands[0], "setenv") == 0)
     {
         set_env(command);

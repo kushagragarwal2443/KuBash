@@ -14,18 +14,17 @@ ssize_t len = 0;
 char *commands[1000];
 char *withincommands[1000];
 char fullcommand[1000];
-char history[21][1000];
 char path_to_history[1000];
-int hist_number =0;
 
 int main()
 {
-
     getcwd(home, sizeof(home));
-
+    getcwd(last_working_dir, sizeof(last_working_dir));
+    
     //For History Reading history.txt
     FILE * file_history;
     char *lin;
+    hist_number = 0;
 
     strcpy(path_to_history, home);
     strcat(path_to_history, "/history.txt");
@@ -97,7 +96,7 @@ int main()
                 
             } 
 
-            // Checking Redirection
+            // Checking Piping and Redirection
             
             char *output_redirec = strstr(fullcommand, ">");
             char *input_redirec = strstr(fullcommand, "<");
@@ -115,47 +114,8 @@ int main()
 
             else
             {
-                //Executing other commands
-
-                if(strcmp(withincommands[0], "history")==0)
-                {
-                    int numbercommands;
-                    if(numwithincom == 1)
-                    {
-                        numbercommands=10;
-                    }
-                    else
-                    {
-                        numbercommands=atoi(withincommands[1]);
-                    }
-                    
-                    if(numbercommands>10)
-                    {
-                        printf("Error maximum number of commands allowed is 10\n");
-                    }
-                    else
-                    {
-                        if(hist_number -numbercommands <0)
-                        {
-                            numbercommands = hist_number;
-                        }
-                        for(int i = hist_number-numbercommands; i<=hist_number-1; i++)
-                        {
-                            printf("%s",history[i]);
-                        } 
-                    }
-                }
-
-
-                else
-                {
-                    execute(fullcommand);
-                }
-
+                execute(fullcommand);
             }
-            
-
-
         }
 
     }
