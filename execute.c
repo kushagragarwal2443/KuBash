@@ -4,6 +4,8 @@
 #include "cd.h"
 #include "ls.h"
 #include "pinfo.h"
+#include "set_env.h"
+#include "unset_env.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -43,17 +45,27 @@ void execute(char *command)
     
     else if(strcmp(withincommands[0], "cd")==0)
     {
-        cd(fullcommand);
+        cd(command);
     }
 
     else if(strcmp(withincommands[0], "ls")==0)
     {
-        ls(fullcommand);
+        ls(command);
     }
 
     else if(strcmp(withincommands[0], "pinfo")==0)
     {
-        pinfo(fullcommand);
+        pinfo(command);
+    }
+
+    else if(strcmp(withincommands[0], "setenv") == 0)
+    {
+        set_env(command);
+    }
+
+    else if(strcmp(withincommands[0], "unsetenv") == 0)
+    {
+        unset_env(command);
     }
 
     else

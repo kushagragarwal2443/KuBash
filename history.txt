@@ -1,20 +1,20 @@
-cat < hi.txt
-echo hello > hi.txt
-cat < hi.txt
-echo hellokijdjkdlj >> hi.txt
-cat < hi.txt
-pinfo >> hi.txt
-cat < hi.txt
-pinfo | wc
-pinfo | wc > hi.txt
-cat ramu | wc > hi.txt
-echo hi > hi.txt
-echo hello > hi.txt
-echo hi >> hi.txt
-cat < hi.txt
-cat < hi.txt | wc
-cat < hi.txt
-sort < hi.txt
-diff hi.txt hello.txt | wc > answer.txt
-sort < hi.txt >> answer.txt
-sort < hi.txt | wc >> answer.txt
+grep "echo" execute.c | cat pwd.c | wc
+ls | grep *.txt > in.txt
+ls | grep .txt > in.txt
+ls | grep history.txt > in.txt
+setenv kushagra 100
+setenv kushagra 100
+setenv kushagra 100
+setenv kushagra 100
+echo $kushagra
+unsetenv kushagra
+echo $kushagra
+setenv kuskf kjfdj fkldjf
+setenv kushagra 2i2o3
+setenv kushagra 4r23
+setenv kushagra ur2i lkd
+unsetenv kushagra
+unsetenv lkfksd
+unsetenv fjlsdkj kflsdjf
+unsetenv kusj fsdklf
+setenv kdfj
