@@ -7,6 +7,10 @@
 #include "set_env.h"
 #include "unset_env.h"
 #include "jobs.h"
+#include "kjob.h"
+#include "bg.h"
+#include "overkill.h"
+#include "fg.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -64,6 +68,25 @@ void execute(char *command)
         jobs();
     }
 
+    else if(strcmp(withincommands[0], "kjob")==0)
+    {
+        kjob(command);
+    }
+
+    else if(strcmp(withincommands[0], "bg")==0)
+    {
+        bg(command);
+    }
+
+    else if(strcmp(withincommands[0], "fg")==0)
+    {
+        fg(command);
+    }
+
+    else if(strcmp(withincommands[0], "overkill")==0)
+    {
+        overkill();
+    }
 
     else if(strcmp(withincommands[0], "history")==0)
     {

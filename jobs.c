@@ -42,13 +42,14 @@ void jobs()
             char stat[2];
             strcpy(stat, important[2]);
 
-            if(strcmp(stat, "S")==0)
+            
+            if(strcmp(stat, "T")==0)
             {
-                strcpy(job_status, "Running");
+                strcpy(job_status, "Stopped");
             }
             else
             {
-                strcpy(job_status, "Stopped");
+                strcpy(job_status, "Running");
             }
             
             printf("[%d] %s %s [%d]\n", i+1, job_status, job_name[i], pid+1);
