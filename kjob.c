@@ -27,10 +27,14 @@ void kjob(char *command)
 
         if(job_number< 0 || job_number > num_jobs)
         {
-            printf("Error: jobnumber should be in the range 0-%d\n", num_jobs);
+            printf("Error: jobnumber should be in the range 1-%d\n", num_jobs);
         }
         else
-        {
+        {   
+            if(sig_number == 9)
+            {
+                kjobkill_flag = 1;
+            }
             kill(job_pid[job_number-1], sig_number);
         }
     }

@@ -151,66 +151,17 @@ void execute(char *command)
     
     // Creating my child process
     pid_t pid=fork();
-    pid_t childpid;
-
+    
     //Check for Child process
     if(pid==0)
     {
-        //2 cases arise: 1 with & present other with & absent
-
-        //And present, run it in the background, hence check for end signal
-        if(and_flag==1)
+        int s = execvp(withincommands[0], withincommandsremAnd);   
+        if(s==-1)
         {
-            childpid = fork();
-
-            //Now for the child I have 2 processes child original and child ka child
-
-            //Child ka child to run the process
-            if(childpid == 0)
-            {
-                int s = execvp(withincommands[0], withincommandsremAnd);   
-                if(s==-1)
-                {
-                    printf("%s: Command not found\n", withincommands[0]);
-                }
-
-                exit(0);
-            }
-
-            //Child ka original to check when the child ends
-            else
-            {
-                int status;
-
-                waitpid(childpid, &status, 0);
-
-                if(WIFEXITED(status))
-                {
-                    int exit_status = WEXITSTATUS(status);
-                    printf("%s with pid %d exited normally\n", withincommands[0], childpid);
-
-                }
-                else
-                {
-                    printf("%s with pid %d exited abnormally\n", withincommands[0], childpid);
-                }
-
-                exit(0);
-      
-            }
+            printf("%s: Command not found\n", withincommands[0]);
         }
 
-        //And absent, run it in the foreground, hence no need to return end signal
-        else
-        {
-            int s = execvp(withincommands[0], withincommands);   
-            if(s==-1)
-            {
-                printf("%s: Command not found\n", withincommands[0]);
-            } 
-        }
-        
-
+        exit(0);
     }
 
     //Check for Parent process
@@ -223,6 +174,7 @@ void execute(char *command)
         }
         else
         {
+            printf("Starting background process %s with pid [%d]\n", withincommands[0], pid+1);
             job_pid[num_jobs]=pid;
             strcpy(job_name[num_jobs], withincommands[0]);
             num_jobs++;

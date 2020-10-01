@@ -11,3 +11,6 @@ int hist_number;
 int job_pid[1000];
 char job_name[1000][100];
 int num_jobs;
+
+int kjobkill_flag;
+int overkill_flag;

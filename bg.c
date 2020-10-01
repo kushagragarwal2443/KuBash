@@ -26,11 +26,10 @@ void bg(char *command)
 
         if(job_number< 0 || job_number > num_jobs)
         {
-            printf("Error: jobnumber should be in the range 0-%d\n", num_jobs);
+            printf("Error: jobnumber should be in the range 1-%d\n", num_jobs);
         }
         else
         {
-            printf("Hello\n");
             kill(job_pid[job_number-1], SIGCONT);
         }
     }
