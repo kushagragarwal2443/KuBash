@@ -18,6 +18,13 @@ char path_to_history[1000];
 
 int main()
 {
+    num_jobs=0;
+    for(long long int i=0;i<1000;i++)
+    {
+        strcpy(job_name[i], "");
+        job_pid[i] = 0;
+    }
+
     getcwd(home, sizeof(home));
     getcwd(last_working_dir, sizeof(last_working_dir));
     

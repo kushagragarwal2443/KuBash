@@ -6,6 +6,7 @@
 #include "pinfo.h"
 #include "set_env.h"
 #include "unset_env.h"
+#include "jobs.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -57,6 +58,12 @@ void execute(char *command)
     {
         pinfo(command);
     }
+
+    else if(strcmp(withincommands[0], "jobs")==0)
+    {
+        jobs();
+    }
+
 
     else if(strcmp(withincommands[0], "history")==0)
     {
@@ -121,6 +128,7 @@ void execute(char *command)
     
     // Creating my child process
     pid_t pid=fork();
+    pid_t childpid;
 
     //Check for Child process
     if(pid==0)
@@ -130,7 +138,7 @@ void execute(char *command)
         //And present, run it in the background, hence check for end signal
         if(and_flag==1)
         {
-            pid_t childpid = fork();
+            childpid = fork();
 
             //Now for the child I have 2 processes child original and child ka child
 
@@ -189,7 +197,14 @@ void execute(char *command)
         if(and_flag==0)
         {
             waitpid(pid, NULL, 0);
-        }       
+        }
+        else
+        {
+            job_pid[num_jobs]=pid;
+            strcpy(job_name[num_jobs], withincommands[0]);
+            num_jobs++;
+        }
+               
     }
 
     else
