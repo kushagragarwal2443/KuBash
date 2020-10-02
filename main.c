@@ -19,27 +19,33 @@ char *withincommands[1000];
 char fullcommand[1000];
 char path_to_history[1000];
 
+void delete_all()
+{
+    for (int j = 0; j < num_jobs; j++)
+    {
+        job_pid[j] = 0;
+        strcpy(job_name[j], "");
+    }  
+
+    num_jobs = 0;
+
+}
+
 void delete_pr(int id)
 {
-    if (id == -1)
+    for (int i = 0; i < num_jobs; i++)
     {
-        num_jobs = 0;
-    }
-    
-    else
-    {
-        for (int i = 0; i < num_jobs; i++)
+        if (job_pid[i] == id)
         {
-            if (job_pid[i] == id)
-            {
-                num_jobs--;
+            num_jobs--;
 
-                for (int j = i; j < num_jobs; j++)
-                {
-                    job_pid[j] = job_pid[j+1];
-                    strcpy(job_name[j], job_name[j+1]);
-                }                
-            }
+            for (int j = i; j < num_jobs; j++)
+            {
+                job_pid[j] = job_pid[j+1];
+                job_pid[j+1] = 0;
+                strcpy(job_name[j], job_name[j+1]);
+                strcpy(job_name[j+1], "");
+            }                
         }
     }
     
@@ -52,17 +58,12 @@ void check_child()
 
     if(overkill_flag == 1)
     {
-        delete_pr(-1);
+        delete_all();
         return;
     }
 
     for(int i = 0; i < num_jobs; i++)
     {
-        if(pid < 0)
-        {
-            printf("Waitpid failed\n");
-        }
-
         if(( WIFEXITED(status) || kjobkill_flag == 1 ) && pid == job_pid[i])
         {
             if(WEXITSTATUS(status) == 0)
@@ -78,7 +79,7 @@ void check_child()
 
             fflush(stdout);
             delete_pr(pid);
-            // prompt();
+            
             if(kjobkill_flag == 1)
             {
                 kjobkill_flag = 0;

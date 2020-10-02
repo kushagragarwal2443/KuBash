@@ -1,20 +1,20 @@
 jobs
-overkill
-jobs
-emacs &
-emacs &
-emacs &
-emacs &
 jobs
 jobs
 jobs
-kjob 3 23
-kjob 1 22
+jobs
+jobs
+emacs &
+jobs
+fg 1
+jobs
+jobs
+emacs &
+emacs &
 jobs
 bg 1
-job
+jobs
+fg 2
 jobs
 jobs
-jobs
-emacs &
-jobs
+fg 1
