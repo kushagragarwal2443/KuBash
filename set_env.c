@@ -16,8 +16,17 @@ void set_env(char *command)
         withincommands[numwithincom] = strtok(NULL, "\r\t "); 
     } 
 
-    if (numwithincom != 3)
+    if (numwithincom > 3 || numwithincom < 2)
+    {
         printf("Error: setenv should only have 2 arguements\n");
+    }
+    
+    else if(numwithincom == 2)
+    {
+        int setflag = setenv(withincommands[1], "", 1);
+        if(setflag < 0)
+            printf("Error: Couldn't set the environment variable\n");
+    }
 
     else
     {

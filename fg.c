@@ -56,6 +56,12 @@ void fg(char *command)
 
             tcsetpgrp(STDIN_FILENO,job_pid[job_num-1]);
 
+            // printf("FG VALUES BEFORE: %d, %s\n", fg_id, fg_name);
+            // printf("BG VALUES: %d, %s\n", job_pid[job_num-1], job_name[job_num-1]);
+            fg_id = job_pid[job_num-1]; // Updating foreground process pid
+            strcpy(fg_name, job_name[job_num-1]); // Updating foreground process name
+            // printf("FG VALUES AFTER: %d, %s\n", fg_id, fg_name);
+
             kill(job_pid[job_num-1], SIGCONT); // Setting state to running
 
             delete_process(job_pid[job_num-1]);  // Delete process from our array
@@ -66,6 +72,9 @@ void fg(char *command)
             
             signal(SIGTTIN,SIG_DFL);
             signal(SIGTTOU,SIG_DFL);
+
+            fg_id = -1;
+            strcpy(fg_name, "");
         }
 
     }

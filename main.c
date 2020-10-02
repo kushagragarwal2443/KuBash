@@ -51,6 +51,32 @@ void delete_pr(int id)
     
 }
 
+void check_control_c()
+{
+    pid_t current_pid = getpid();
+    if(current_pid != shell_pid)
+    {
+        printf("\n");
+        return;
+    }
+
+    if (fg_id == -1)
+    {
+        printf("\n");
+        prompt();
+        fflush(stdout);
+    }
+
+    else
+    {
+        kill(fg_id, SIGINT);
+        printf("\n");
+    }
+
+    signal(SIGINT, check_control_c);
+
+}
+
 void check_child()
 {
     int status;
@@ -90,6 +116,10 @@ void check_child()
 
 int main()
 {
+    shell_pid = getpid();
+
+    fg_id = -1;
+    strcpy(fg_name, "");
     
     num_jobs=0;
     overkill_flag = 0;
@@ -124,7 +154,10 @@ int main()
 
     while (1)
     {
+
         signal(SIGCHLD, check_child);
+        signal(SIGINT, check_control_c);
+
         prompt();
         
         getline(&userinput, &len, stdin);

@@ -1,20 +1,20 @@
-jobs
-jobs
-jobs
-jobs
-jobs
-jobs
-emacs &
-jobs
-fg 1
-jobs
-jobs
-emacs &
+cat < overkill.c | wc
 emacs &
 jobs
 bg 1
 jobs
-fg 2
+kjob 1 20
 jobs
+bg 1
 jobs
 fg 1
+ls
+ls
+ls -a
+echo sdlfdj
+echo jfdjlds | wc
+cd ..
+cd -
+emacs &
+jobs
+exit

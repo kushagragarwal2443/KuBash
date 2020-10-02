@@ -43,6 +43,11 @@ void execute(char *command)
         exit(0);
     }
 
+    else if(strcmp(withincommands[0], "quit")==0)
+    {
+        exit(0);
+    }
+
     else if(strcmp(withincommands[0], "echo")==0)
     {
         echo(command);
@@ -170,7 +175,12 @@ void execute(char *command)
         //If and absent then run in foreground hence wait for child
         if(and_flag==0)
         {
+            fg_id = pid;
+            strcpy(fg_name, withincommands[0]);
             waitpid(pid, NULL, 0);
+            fg_id = -1;
+            strcpy(fg_name, "");
+            
         }
         else
         {
