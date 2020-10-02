@@ -5,7 +5,7 @@ This repository contains a Linux shell implemented in C which resembles the Bour
 ## Run the shell
 * Type the command `make`
 * Type `./a.out` to launch the shell
-* Type `exit` or Press `Ctrl+C` to exit the shell
+* Type `exit` or `quit` to exit the shell
 
 ## Commands implemented
 The following commands were coded for explicitly. All the other commands are supported by the shell using `execvp()`
@@ -74,6 +74,67 @@ The following commands were coded for explicitly. All the other commands are sup
 * Output: `cd ~` <br>
 `emacs &` <br>
 `history 3`
+
+### `setenv [var] [value]` 
+* Allows the user to set the value of the environment variable [var] to [value]
+* If value is omitted, the variable's value is set to the empty string
+* Code available in set_env.c and Header files are in set_env.h
+* #### Usage examples
+* Input: `setenv kush 100`
+* Ouput: On running `env`, kush=100 appears on the last line
+
+### `unsetenv [var]` 
+* Allows the user to uset the value of the environment variable [var]
+* Code available in unset_env.c and Header files are in unset_env.h
+* #### Usage examples
+* Input: `unsetenv kush`
+* Ouput: On running `env`, kush=100 is removed the last line
+
+### `jobs` 
+* Prints a list of all currently running background processes spawned by the shell in order of their creation times
+* Prints job number,process ID and their state
+* Code available in jobs.c and Header files are in jobs.h
+* #### Usage examples
+* Input: `jobs`
+* Ouput: `[1] Stopped emacs [8074]` <br>
+`[2] Running firefox [8101]`
+
+
+### `kjobs [job_num] [signal]` 
+* Sends [signal] to the process with job number = [job_num]
+* Code available in kjob.c and Header files are in kjob.h
+* #### Usage examples
+* Input: `kjob 2 9`
+* Ouput: On running `jobs` we get `[1] Stopped emacs [8074]`
+* As the signal=9 is SIGKILL and it killed the firefox background job
+
+
+### `overkill` 
+* Kills all background process at once
+* Code available in overkill.c and Header files are in overkill.h
+* #### Usage examples
+* Input: `overkill`
+* Ouput: On running `jobs` no output appears and all jobs are killed`
+
+### `bg [job_num]` 
+* Changes the state of a stopped background job to running (in the background).
+* Code available in bg.c and Header files are in bg.h
+* #### Usage examples
+* Input: `jobs`
+* Output: `[1] Stopped emacs [8074]` <br>
+`[2] Running firefox [8101]`
+* Input: `bg 1`
+* Input: `jobs`
+* Output: `[1] Running emacs [8074]` <br>
+`[2] Running firefox [8101]`
+
+
+### `fg [job_num]` 
+* Brings the running or stopped background job corresponding to [job_num] to the foreground, and changes its state to running
+* Code available in fg.c and Header files are in fg.h
+* #### Usage examples
+* Input: `fg 1`
+* Output: Process comes to foreground waits for user to finish it
 
 ### Background and Foreground processes
 * If a command contains `&` as one of the arguements then it is considered a background process
