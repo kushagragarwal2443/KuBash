@@ -5,7 +5,7 @@ This repository contains a Linux shell implemented in C which resembles the Bour
 ## Run the shell
 * Type the command `make`
 * Type `./a.out` to launch the shell
-* Type `exit` or Press `Ctrl+C` to exit the shell
+* Type `exit` or `quit` or Press `Ctrl+D` to exit the shell
 
 ## Commands implemented
 The following commands were coded for explicitly. All the other commands are supported by the shell using `execvp()`
@@ -74,6 +74,25 @@ The following commands were coded for explicitly. All the other commands are sup
 * Output: `cd ~` <br>
 `emacs &` <br>
 `history 3`
+
+### `setenv [var] [value]`
+* Allows the user to set the value of the environment variable [var] to [value]
+* If [value] is omitted, the variable's value is set to the empty string.
+* It only takes 2 arguements
+* Code available in setenv.c and Header files are in setenv.h
+* #### Usage examples
+* Input: `setenv kush 100`
+* Output: On running `env` we see `kush=100`
+
+### `unsetenv [var]`
+* Removes the environment variable [var].
+* It only takes 1 arguement
+* Code available in unsetenv.c and Header files are in unsetenv.h
+* #### Usage examples
+* Input: `unsetenv kush`
+* Output: On running `env` no entry for kush is found
+
+
 
 ### Background and Foreground processes
 * If a command contains `&` as one of the arguements then it is considered a background process
